@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>TodoApp</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  </head>
+
+  <body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm mb-4">
+      <div class="container">
+        <%= link_to "Taskly", root_path, class: "navbar-brand" %>
+
+        <% if logged_in? %>
+          <div>
+            <%= link_to "ToDos", todos_path, class: "nav-link d-inline" %>
+            <%= link_to "Completed ToDos", completed_todos_path, class: "nav-link d-inline" %>
+          </div>
+        <% end %>
+
+        <div class="ms-auto">
+          <% if logged_in? %>
+            <span class="navbar-text me-3">Hi, <%= current_user.first_name %>!</span>
+
+            <%= button_to "Logout",
+                  logout_path,
+                  method: :delete,
+                  form: { class: "d-inline" },
+                  class: "btn btn-outline-secondary btn-sm me-2" %>
+
+            <%= button_to "Delete Account",
+                  user_path(current_user),
+                  method: :delete,
+                  data: { confirm: "Are you sure? This cannot be undone." },
+                  form: { class: "d-inline" },
+                  class: "btn btn-outline-danger btn-sm" %>
+          <% else %>
+            <%= link_to "Login", login_path, class: "btn btn-outline-primary btn-sm me-2" %>
+            <%= link_to "Sign Up", new_user_path, class: "btn btn-primary btn-sm" %>
+          <% end %>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container">
+      <% flash.each do |type, message| %>
+        <div class="alert alert-<%= type == "alert" ? "danger" : "success" %>">
+          <%= message %>
+        </div>
+      <% end %>
+      <%= yield %>
+    </div>
+
+    <footer class="text-center py-4">
+      <p>Made with 💜 in TodoApp.</p>
+    </footer>
+  </body>
+</html>
+
+
+

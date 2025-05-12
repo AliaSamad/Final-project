@@ -1,0 +1,45 @@
+<%= link_to "Manage Categories", categories_path, class: "btn btn-secondary mb-3" %>
+
+<h1>Your ToDos</h1>
+
+<%= link_to "Add New ToDo", new_todo_path, class: "btn btn-success mb-3" %>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Category</th>
+      <th>Priority</th>
+      <th>Completed</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @todos.each do |todo| %>
+      <tr class="<%= 'table-success' if todo.completed %> <%= 'table-warning' if todo.priority && !todo.completed %>">
+        <td><%= todo.title %></td>
+        <td><%= todo.category %></td>   
+        <td><%= todo.priority ? 'Yes' : 'No' %></td>
+        <td>
+        <%= button_to (todo.completed ? '☑' : '☐'),
+        toggle_complete_todo_path(todo),
+        method: :patch,
+        form: { class: 'd-inline' },
+        class: 'btn btn-sm btn-light',
+        title: (todo.completed ? 'Mark Incomplete' : 'Mark Complete') %>
+        </td>
+
+        <td>
+          <%= link_to 'Show', todo_path(todo), class: 'btn btn-sm btn-info' %>
+          <%= link_to 'Edit', edit_todo_path(todo), class: 'btn btn-sm btn-warning' %>
+          <%= button_to 'Delete',
+                todo_path(todo),
+                method: :delete,
+                data: { confirm: 'Are you sure?' },
+                form: { class: 'd-inline' },
+                class: 'btn btn-sm btn-danger' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

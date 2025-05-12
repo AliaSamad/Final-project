@@ -1,0 +1,25 @@
+<h1><%= @todo.title %></h1>
+
+<p>
+  <strong>Category:</strong>
+  <%= @todo.category %>
+</p>
+
+<p>
+  <strong>Priority:</strong>
+  <%= @todo.priority? ? "Yes" : "No" %>
+</p>
+
+<p>
+  <strong>Completed:</strong>
+  <%= @todo.completed? ? "Yes" : "No" %>
+</p>
+
+<%= link_to "← Back to List", todos_path, class: "btn btn-secondary" %>
+<%= link_to "Edit", edit_todo_path(@todo), class: "btn btn-warning ms-2" %>
+<%= button_to "Delete",
+      todo_path(@todo),
+      method: :delete,
+      data: { confirm: "Are you sure?" },
+      form: { class: "d-inline" },
+      class: "btn btn-danger ms-2" %>
