@@ -10,16 +10,21 @@ Rails.application.routes.draw do
   # User signup & account deletion
   resources :users, only: [:new, :create, :destroy]
 
-  # Categories and ToDos
+  # Categories
   resources :categories
 
+  # ToDos
   resources :todos do
-    member do
-      patch :toggle_complete
-    end
-
     collection do
       get :completed
     end
+
+    member do
+      # PATCH /todos/:id/toggle_complete → todos#toggle_complete
+      patch :toggle_complete
+    end
   end
 end
+
+  
+  

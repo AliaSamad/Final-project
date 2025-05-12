@@ -1,0 +1,33 @@
+<h1><%= @category.name %></h1>
+<p><%= @category.description.presence || "No description" %></p>
+
+<div class="mb-4">
+  <%= link_to "Edit Category", edit_category_path(@category),
+              class: "btn btn-warning me-2" %>
+  <%= button_to "Delete Category", category_path(@category),
+                method: :delete,
+                data: { confirm: "Delete “#{@category.name}” and its ToDos?" },
+                class: "btn btn-danger me-2" %>
+  <%= link_to "Back to All Categories", categories_path,
+              class: "btn btn-secondary" %>
+</div>
+
+<hr>
+
+<h2>ToDos in “<%= @category.name %>”</h2>
+<% if @category.todos.any? %>
+  <ul class="list-group">
+    <% @category.todos.each do |todo| %>
+      <li class="list-group-item d-flex justify-content-between">
+        <%= link_to todo.title, todo_path(todo) %>
+        <span class="badge bg-<%= todo.completed ? "success" : "secondary" %>">
+          <%= todo.completed ? "Done" : "Pending" %>
+        </span>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p class="text-muted">No ToDos in this category yet.</p>
+  <%= link_to "Add a ToDo", new_todo_path(category_id: @category.id),
+                class: "btn btn-primary" %>
+<% end %>

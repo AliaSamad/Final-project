@@ -1,6 +1,6 @@
 class CategoriesController < ApplicationController
   before_action :require_login
-  before_action :set_category,     only: %i[show edit update destroy]
+  before_action :set_category,   only: %i[show edit update destroy]
   before_action :authorize_category, only: %i[show edit update destroy]
 
   def index
@@ -8,7 +8,7 @@ class CategoriesController < ApplicationController
   end
 
   def show
-    @todos = @category.todos
+    @category = current_user.categories.find(params[:id])
   end
 
   def new
@@ -20,8 +20,6 @@ class CategoriesController < ApplicationController
     if @category.save
       redirect_to categories_path, notice: "Category created."
     else
-      # Display validation errors
-      flash.now[:alert] = @category.errors.full_messages.to_sentence
       render :new
     end
   end
@@ -32,13 +30,11 @@ class CategoriesController < ApplicationController
     if @category.update(category_params)
       redirect_to category_path(@category), notice: "Category updated."
     else
-      flash.now[:alert] = @category.errors.full_messages.to_sentence
       render :edit
     end
   end
 
   def destroy
-    # dependent: :destroy on the model will remove todos automatically
     @category.destroy
     redirect_to categories_path, notice: "Category and its ToDos deleted."
   end
@@ -57,4 +53,3 @@ class CategoriesController < ApplicationController
     params.require(:category).permit(:name, :description)
   end
 end
-

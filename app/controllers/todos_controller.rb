@@ -1,19 +1,20 @@
 class TodosController < ApplicationController
   before_action :require_login
+  # make sure we load & authorize for show, edit, update, destroy—and toggle_complete too
   before_action :set_todo,     only: %i[show edit update destroy toggle_complete]
   before_action :authorize_todo, only: %i[show edit update destroy toggle_complete]
 
-
   def index
-    @todos = current_user.todos
+    @todos = current_user.todos.includes(:category)
   end
 
   def completed
-    @todos = current_user.todos.where(completed: true)
+    @todos = current_user.todos.where(completed: true).includes(:category)
     render :index
   end
 
-  def show; end
+  def show
+  end
 
   def new
     @todo = current_user.todos.build
@@ -28,7 +29,8 @@ class TodosController < ApplicationController
     end
   end
 
-  def edit; end
+  def edit
+  end
 
   def update
     if @todo.update(todo_params)
@@ -42,13 +44,14 @@ class TodosController < ApplicationController
     @todo.destroy
     redirect_to todos_path, notice: "ToDo deleted."
   end
-  
+
+  # === Step 2: toggle_complete action ===
   def toggle_complete
     @todo.update(completed: !@todo.completed)
-    notice = @todo.completed ? "Marked complete." : "Marked incomplete."
-    redirect_to todos_path, notice: notice
+    status = @todo.completed ? "complete" : "incomplete"
+    redirect_to todos_path, notice: "ToDo marked #{status}."
   end
-  
+
   private
 
   def set_todo
@@ -60,6 +63,10 @@ class TodosController < ApplicationController
   end
 
   def todo_params
-    params.require(:todo).permit(:title, :priority, :completed, :category)
+    params
+      .require(:todo)
+      .permit(:title, :priority, :completed, :category_id)
   end
 end
+
+

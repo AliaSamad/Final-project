@@ -18,20 +18,19 @@
     <% @todos.each do |todo| %>
       <tr class="<%= 'table-success' if todo.completed %> <%= 'table-warning' if todo.priority && !todo.completed %>">
         <td><%= todo.title %></td>
-        <td><%= todo.category %></td>   
+        <td><%= todo.category.name %></td>
         <td><%= todo.priority ? 'Yes' : 'No' %></td>
         <td>
-        <%= button_to (todo.completed ? '☑' : '☐'),
-        toggle_complete_todo_path(todo),
-        method: :patch,
-        form: { class: 'd-inline' },
-        class: 'btn btn-sm btn-light',
-        title: (todo.completed ? 'Mark Incomplete' : 'Mark Complete') %>
+          <%= button_to (todo.completed ? '✅' : '⬜'),
+                toggle_complete_todo_path(todo),
+                method: :patch,
+                form: { class: 'd-inline' },
+                class: 'btn btn-sm btn-light',
+                title: (todo.completed ? 'Mark Incomplete' : 'Mark Complete') %>
         </td>
-
         <td>
-          <%= link_to 'Show', todo_path(todo), class: 'btn btn-sm btn-info' %>
-          <%= link_to 'Edit', edit_todo_path(todo), class: 'btn btn-sm btn-warning' %>
+          <%= link_to 'Show',   todo_path(todo),      class: 'btn btn-sm btn-info'    %>
+          <%= link_to 'Edit',   edit_todo_path(todo), class: 'btn btn-sm btn-warning' %>
           <%= button_to 'Delete',
                 todo_path(todo),
                 method: :delete,

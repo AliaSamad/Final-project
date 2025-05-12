@@ -1,26 +1,20 @@
-<!-- app/views/categories/index.html.erb -->
-
-<h1>Your Categories & Their ToDos</h1>
-
-<%= link_to "New Category", new_category_path, class: "btn btn-success mb-4" %>
+<h1>Your Categories</h1>
+<%= link_to "New Category", new_category_path, class: "btn btn-success mb-3" %>
 
 <% @categories.each do |category| %>
   <div class="card mb-4">
     <div class="card-header d-flex justify-content-between align-items-center">
       <h5 class="mb-0"><%= category.name %></h5>
       <div>
-        <%= link_to "Edit",
-              edit_category_path(category),
-              class: "btn btn-sm btn-warning me-1" %>
+        <%= link_to "Edit", edit_category_path(category), class: "btn btn-sm btn-warning me-1" %>
         <%= button_to "Delete",
-              category_path(category),
-              method: :delete,
-              data: { confirm: "Delete this category and ALL its ToDos?" },
-              form: { class: "d-inline" },
-              class: "btn btn-sm btn-danger" %>
+                      category_path(category),
+                      method: :delete,
+                      data: { confirm: "Delete this category and ALL its ToDos?" },
+                      form: { class: "d-inline" },
+                      class: "btn btn-sm btn-danger" %>
       </div>
     </div>
-
     <ul class="list-group list-group-flush">
       <% if category.todos.any? %>
         <% category.todos.each do |todo| %>
@@ -32,11 +26,8 @@
           </li>
         <% end %>
       <% else %>
-        <li class="list-group-item text-muted">
-          No ToDos in this category yet.
-        </li>
+        <li class="list-group-item text-muted">No ToDos in this category yet.</li>
       <% end %>
     </ul>
   </div>
 <% end %>
-
