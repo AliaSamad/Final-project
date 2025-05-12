@@ -1,16 +1,61 @@
-/.bundle/
-/log/*
-!/log/.keep
-/tmp/
-/.byebug_history
 
-/db/*.sqlite3
-/db/*.sqlite3-journal
-/public/assets
-/node_modules/
-/yarn-error.log
 
+### Rails ###
+*.rbc
+capybara-*.html
+*.orig
+rerun.txt
+pickle-email-*.html
+# Ignore application logs:
+log/*.log
+tmp/**/*
+
+# Ignore DB artifacts:
+db/*.sqlite3
+db/*.sqlite3-journal
+
+# Ignore byebug command history file.
+.byebug_history
+
+# If you use credentials:
+config/credentials.yml.enc
+config/master.key
+
+# Ignore dotenv environment variables:
+.env*
+  
+# Ignore bundler config:
+.bundle
+
+# Ignore vendor dirs:
+vendor/bundle
+vendor/cache
+vendor/assets/bower_components
+public/assets
+public/packs
+public/packs-test
+
+# Node/Yarn/Babel/Webpacker
+node_modules
+yarn-debug.log*
+yarn-error.log*
+.npm
+.npmrc
+.yarn-integrity
+/packs
+/packs-test
+
+# Ignore IDE/editor temp files:
+*.swp
 *~
-.DS_Store
+.project
+.idea
+.vscode
+*.sublime-project
+*.sublime-workspace
 
-exit
+# Ignore system files:
+.DS_Store
+Thumbs.db
+
+### End Rails ###
