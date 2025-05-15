@@ -18,4 +18,5 @@ gem "font-awesome-sass", "~> 6.1"
 
 # Utilities
 gem "jbuilder", "~> 2.7"
-gem "bootsnap", ">= 1.4.4", require: false
+gem 'bootsnap', require: false
+
